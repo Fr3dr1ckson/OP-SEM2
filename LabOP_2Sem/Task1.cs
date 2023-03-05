@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using static LabOP_2Sem.UsefulFunctions;
 
 namespace LabOP_2Sem
 {
-    public class Task1
+    public class Task1: ITask
     {
-        public static void Run()
+        public void Run()
         {
             int input = GetInput();
             Console.Clear();
@@ -36,6 +37,28 @@ namespace LabOP_2Sem
 
             Console.Write($"\nКількість пар в масиві: {counter}");
             Console.Write($"\nКількість пар в масиві: {counterV2}");
+        }
+
+        private static int GetInput()
+        {
+            Console.Clear();
+            Console.Write("Оберіть цифру, залежно від того, як хочете заповнити масив: \n" +
+                          "1: Автоматичне заповнення\n" +
+                          "2: Заповнення вручну");
+            while (true)
+            {
+                int[] cursor = { Console.CursorLeft, Console.CursorTop };
+                Console.CursorVisible = false;
+                Console.SetCursorPosition(cursor[0], cursor[1]);
+                if (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey().Key;
+                    if (key == ConsoleKey.D2) return 2;
+                    if (key == ConsoleKey.D1) return 1;
+                    Console.Write("Можна обрати лише 1 або 2");
+                    Thread.Sleep(1500);
+                }
+            }
         }
         
         private static bool FindFirstPair(List<int> nums)

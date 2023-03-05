@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace LabOP_2Sem
@@ -16,8 +18,11 @@ namespace LabOP_2Sem
 
             return arr;
         }
-        
-        
+
+        public static Dictionary<string, int> SortDictionaryByValue(IDictionary<string,int> dictionary)
+        {
+            return dictionary.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+        }
         public static int[] CreateArr(uint size)
         {
             int[] arr = new int[size];
@@ -42,28 +47,6 @@ namespace LabOP_2Sem
             return arr;
         }
         
-        
-        public static int GetInput()
-        {
-            Console.Clear();
-            Console.Write("Оберіть цифру, залежно від того, як хочете заповнити масив: \n" +
-                          "1: Автоматичне заповнення\n" +
-                          "2: Заповнення вручну");
-            while (true)
-            {
-                int[] cursor = { Console.CursorLeft, Console.CursorTop };
-                Console.CursorVisible = false;
-                Console.SetCursorPosition(cursor[0], cursor[1]);
-                if (Console.KeyAvailable)
-                {
-                    var key = Console.ReadKey().Key;
-                    if (key == ConsoleKey.D2) return 2;
-                    if (key == ConsoleKey.D1) return 1;
-                    Console.Write("Можна обрати лише 1 або 2");
-                    Thread.Sleep(1500);
-                }
-            }
-        }
         
         public static void ShowArr(Array array)
         {

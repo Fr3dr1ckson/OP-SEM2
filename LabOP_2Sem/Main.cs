@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 
 namespace LabOP_2Sem
 {
-    public class MainC
+    public static class MainC
     {
         public static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            Task1.Run();
+            ITask task = new Task2();
+            task.Run();
         }
     }
 }
