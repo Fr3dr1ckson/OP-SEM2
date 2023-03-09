@@ -23,7 +23,7 @@ namespace LabOP_2Sem
             }
             
             int[] arr = input == 1 ? CreateRandArr(size) : CreateArr(size);
-            ShowArr(arr);
+            ShowCollection(arr);
             
             var arrToList = arr.ToList();
             int counterV2 = QuantityOfPairs(arrToList);

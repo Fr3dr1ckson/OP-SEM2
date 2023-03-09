@@ -12,7 +12,7 @@
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <LangVersion>8</LangVersion>
+        <LangVersion>11</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -74,6 +74,7 @@
         <Compile Include="Task.cs" />
         <Compile Include="Task1.cs" />
         <Compile Include="Task2.cs" />
+        <Compile Include="Task3.cs" />
         <Compile Include="UsefulFunctions.cs" />
     </ItemGroup>
     <ItemGroup>

@@ -10,7 +10,7 @@ namespace LabOP_2Sem
         public static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            ITask task = new Task2();
+            ITask task = new Task3();
             task.Run();
         }
     }

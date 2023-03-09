@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace LabOP_2Sem
 {
@@ -31,9 +30,8 @@ namespace LabOP_2Sem
                 Console.Clear();
                 Console.Write("Додайте елемент, можливі значення (-2,147,483,648 до 2,147,483,647)");
                 var checkInput = Console.ReadLine();
-                int element;
                 while(true)
-                    if (int.TryParse(checkInput, out element))
+                    if (int.TryParse(checkInput, out var element))
                     {
                         arr[i] = element;
                         break;
@@ -48,9 +46,9 @@ namespace LabOP_2Sem
         }
         
         
-        public static void ShowArr(Array array)
+        public static void ShowCollection<T>(IEnumerable<T> collection)
         {
-            foreach (var element in array)
+            foreach (var element in collection)
             {
                 Console.Write($"{element}\t");
             }

@@ -36,7 +36,7 @@ namespace LabOP_2Sem
         private static async void ToJson(IDictionary<string,int> dictionary)
         {
             using FileStream fs = new FileStream(path,FileMode.Create);
-            await JsonSerializer.SerializeAsync(fs,dictionary);
+            await JsonSerializer.SerializeAsync(fs,dictionary,new JsonSerializerOptions{WriteIndented = true, AllowTrailingCommas = true});
         }
         private static int GetInput()
         {
