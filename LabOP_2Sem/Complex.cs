@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using static System.Text.Json.JsonSerializer;
 
 namespace LabOP_2Sem
 {
@@ -18,11 +19,13 @@ namespace LabOP_2Sem
         private double Real
         {
             get;
+            set;
         }
 
         private double Imaginary
         {
             get;
+            set;
         }
         public Complex(double real, double imaginary)
         {
@@ -30,6 +33,9 @@ namespace LabOP_2Sem
             Imaginary = imaginary;
         }
 
+        ~Complex(){
+            Console.Write("Hello World");
+        }
         private static Complex Add(Complex num1, Complex num2)
         {
             double realSum = num1.Real + num2.Real;
@@ -66,27 +72,34 @@ namespace LabOP_2Sem
             return new Complex(real, imaginary);
         }
 
-        public static Complex[] SquareRoot(Complex num)
+        public Complex NRoot(double power)
         {
-            var real = num.Real;
-            var imag = num.Imaginary;
-            var firstRoot = Math.Sqrt((real + Math.Sqrt(Math.Pow(real, 2) + Math.Pow(imag, 2))) / 2);
-            var secondRoot = Math.Sqrt((-real + Math.Sqrt(Math.Pow(real, 2) + Math.Pow(imag, 2))) / 2);
-            return new []{ new Complex(firstRoot, secondRoot), new Complex(-firstRoot,-secondRoot) };
+            var modulus = Math.Pow(Real*Real + Imaginary*Imaginary, power%2 == 0 ? 1/power: 1/power*2);
+            var argument = Math.Atan2(Imaginary,Real);
+            var real = modulus * Math.Cos(argument);
+            var imag = modulus * Math.Sin(argument);
+            return new Complex(real,imag);
         }
 
+        ///<summary>
+        /// Method, that puts a complex number in a power, with a DeMoivre method
+        ///<see cref="Complex">Complex</see>
+        ///</summary>
+        /// <param name="num">A complex number we put in the power</param>
+        /// <param name="power">A double value that is a power of our complex number</param>
+        /// <returns>A complex number in power of n</returns>
         private static Complex Power(Complex num, double power)
         {
             var real = num.Real;
             var imag = num.Imaginary;
-            var modulus = Math.Sqrt(Math.Pow(real, 2) + Math.Pow(imag, 2));
-            var argument = 1 / Math.Tan(imag / real / PI);
+            var modulus = Math.Sqrt(real*real + imag*imag);
+            var argument = Math.Atan2(imag,real);
             var realDeMoivre = Math.Pow(modulus, power) * Math.Cos(power * argument);
             var imaginaryDeMoivre = Math.Pow(modulus, power) * Math.Sin(power * argument);
             return new Complex(realDeMoivre, imaginaryDeMoivre);
         }
 
-        private static string toPi(double num)
+        private static string ToPi(double num)
         {
             return $"{Math.Round(num/PI)}π";
         }
@@ -111,31 +124,34 @@ namespace LabOP_2Sem
         
         public override string ToString() => $"{Real} + {Imaginary}i";
         
-        public async void ToJson(string path)
+        public void ToJson(string path)
         {
             var complex = new Dictionary<string, double>
             {
-                { "real", Real },
-                { "imaginary", Imaginary }
+                { "Real", Real },
+                { "Imaginary", Imaginary }
             };
             using FileStream fs = new FileStream(path,FileMode.Create);
-            await JsonSerializer.SerializeAsync(fs, complex, new JsonSerializerOptions{WriteIndented = true, AllowTrailingCommas = true});
-        } 
+            Serialize(fs, complex, new JsonSerializerOptions{WriteIndented = true, AllowTrailingCommas = true});
+        }
+        
+        public static Complex FromJson(string path)
+        {
+            string json = File.ReadAllText(path);
+            var deserializedJson = Deserialize<Dictionary<string, double>>(json);
+            return new Complex(deserializedJson["Real"], deserializedJson["Imaginary"]);
+        }
 
         public string ToString(OutputForm form)
         {
-            var argument = toPi(1 / Math.Tan(Imaginary / Real));
-            switch (form)
+            var argument = ToPi(1 / Math.Tan(Imaginary / Real));
+            return form switch
             {
-                case OutputForm.Algebraic:
-                    return $"{Real} + {Imaginary}i";
-                case OutputForm.Exponential:
-                    return $"{Math.Sqrt(Math.Pow(Real, 2) + Math.Pow(Imaginary, 2))}e^i{argument}";
-                case OutputForm.Polar:
-                    return $"cos{argument} + isin{argument}";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(form), form, null);
-            }
+                OutputForm.Algebraic => $"{Real} + {Imaginary}i",
+                OutputForm.Exponential => $"{Math.Sqrt(Math.Pow(Real, 2) + Math.Pow(Imaginary, 2))}e^i{argument}",
+                OutputForm.Polar => $"cos{argument} + isin{argument}",
+                _ => throw new ArgumentOutOfRangeException(nameof(form), form, null)
+            };
         }
     }
 }
