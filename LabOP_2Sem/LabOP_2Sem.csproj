@@ -9,9 +9,10 @@
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>LabOP_2Sem</RootNamespace>
         <AssemblyName>LabOP_2Sem</AssemblyName>
-        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,16 +37,18 @@
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Net" />
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Company.cs" />
-        <Compile Include="Engineer.cs" />
-        <Compile Include="Intern.cs" />
-        <Compile Include="Manager.cs" />
+        <Compile Include="Company\Company.cs" />
+        <Compile Include="Invention.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="Worker.cs" />
+        <Compile Include="Workers\Engineer.cs" />
+        <Compile Include="Workers\Intern.cs" />
+        <Compile Include="Workers\Manager.cs" />
+        <Compile Include="Workers\Worker.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
